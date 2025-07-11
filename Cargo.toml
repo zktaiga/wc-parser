@@ -1,6 +1,6 @@
 [package]
 name = "wc-parser"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 description = "A decently fast Rust library for parsing WhatsApp chat exports"
 license-file = "LICENSE"
