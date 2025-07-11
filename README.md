@@ -31,7 +31,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-wc-parser = "0.1.0"
+wc-parser = "0.1.1"
 ```
 
 ### Basic Usage
@@ -47,7 +47,7 @@ fn main() {
 Is everything alright?
 "#;
 
-    let messages = parse_string(chat_content, None);
+    let messages = parse_string(chat_content, None).unwrap();
     
     for message in messages {
         println!("Date: {}", message.date);
@@ -72,7 +72,7 @@ let options = ParseStringOptions {
     parse_attachments: true, // Parse attachment information
 };
 
-let messages = parse_string(chat_content, Some(options));
+let messages = parse_string(chat_content, Some(options)).unwrap();
 ```
 
 ## Message Structure
