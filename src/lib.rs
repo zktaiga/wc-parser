@@ -11,7 +11,7 @@ use std::io::Result as IoResult;
 use std::path::Path;
 use memmap2::Mmap;
 
-pub fn parse_string(s: &str, options: Option<ParseStringOptions>) -> Vec<Message> {
+pub fn parse_string(s: &str, options: Option<ParseStringOptions>) -> Result<Vec<Message>, String> {
     let lines: Vec<&str> = s.split('\n').collect();
     let opts = options.unwrap_or_default();
     let debug = opts.debug;
@@ -23,7 +23,7 @@ pub fn parse_string(s: &str, options: Option<ParseStringOptions>) -> Vec<Message
         println!("🔍 DEBUG: =====================================");
     }
     
-    parse_messages(&parser::make_array_of_messages_with_debug(&lines, debug), &opts)
+    Ok(parse_messages(&parser::make_array_of_messages_with_debug(&lines, debug), &opts))
 }
 
 /// Convenience helper that memory-maps a chat export file and parses it without
@@ -35,5 +35,5 @@ pub fn parse_file<P: AsRef<Path>>(path: P, options: Option<ParseStringOptions>) 
     let file = File::open(path)?;
     let mmap = unsafe { Mmap::map(&file)? };
     let text: &str = std::str::from_utf8(&mmap).expect("Chat file is not valid UTF-8");
-    Ok(parse_string(text, options))
+    parse_string(text, options).map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))
 }
