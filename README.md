@@ -1,4 +1,5 @@
 # wc-parser
+[![Rust build & test](https://github.com/zktaiga/wc-parser/actions/workflows/rust.yml/badge.svg)](https://github.com/zktaiga/wc-parser/actions/workflows/rust.yml)
 
 A decently fast Rust library for parsing WhatsApp chat exports.
 
